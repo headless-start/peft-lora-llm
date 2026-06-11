@@ -1,0 +1,20 @@
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# environments
+.venv/
+venv/
+
+# downloaded data & generated artifacts (not committed)
+/data/
+/outputs/
+/wandb/
+*.ckpt
+*.pt
+*.pth
+
+# os
+.DS_Store
