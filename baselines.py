@@ -27,7 +27,13 @@ def main():
     args = parser.parse_args()
     wanted = args.methods.split(",")
 
+    # keep rows from earlier invocations so rerunning one method doesn't lose the rest
     rows = []
+    if os.path.exists("results/baselines.json"):
+        with open("results/baselines.json") as f:
+            rows = [r for r in json.load(f) if r["method"] not in wanted]
+
+    order = [name for name, _ in METHODS]
     with initialize(version_base=None, config_path="configs"):
         for name, method_overrides in METHODS:
             if name not in wanted:
@@ -41,6 +47,7 @@ def main():
                          "ckpt_mb": round(os.path.getsize(res["ckpt_path"]) / 1024**2, 1),
                          "epoch_sec": res["epoch_sec"],
                          "peak_vram_gb": res["peak_vram_gb"]})
+            rows.sort(key=lambda r: order.index(r["method"]))
             # write after every run so a crash doesn't lose the finished ones
             os.makedirs("results", exist_ok=True)
             with open("results/baselines.json", "w") as f:

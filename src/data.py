@@ -61,13 +61,14 @@ def build_loaders(cfg):
     if cfg.data.train_subset:
         train_ds = train_ds.select(range(cfg.data.train_subset))
 
+    # no pinned host buffers — the pinned allocator is unreliable on wsl2
+    # and pinning buys nothing at these batch sizes
     collate = make_collate(build_tokenizer(cfg.model.backbone), cfg.data.max_length)
     train_loader = DataLoader(train_ds, batch_size=cfg.data.batch_size, shuffle=True,
                               num_workers=cfg.data.num_workers, collate_fn=collate,
-                              pin_memory=True, drop_last=True)
+                              drop_last=True)
     val_loader = DataLoader(ds["test"], batch_size=cfg.data.batch_size, shuffle=False,
-                            num_workers=cfg.data.num_workers, collate_fn=collate,
-                            pin_memory=True)
+                            num_workers=cfg.data.num_workers, collate_fn=collate)
     return train_loader, val_loader, NUM_CLASSES
 
 

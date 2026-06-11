@@ -24,7 +24,14 @@ def main():
 
     # rank sweeps write ablation.*, placement sweeps write placement.*
     stem = "placement" if len(placements) > 1 else "ablation"
+
+    # keep rows from earlier invocations so rerunning part of a sweep doesn't lose the rest
+    keys = {(r, p) for p in placements for r in ranks}
     rows = []
+    if os.path.exists(f"results/{stem}.json"):
+        with open(f"results/{stem}.json") as f:
+            rows = [row for row in json.load(f) if (row["r"], row["placement"]) not in keys]
+
     with initialize(version_base=None, config_path="configs"):
         for p in placements:
             for r in ranks:
@@ -38,6 +45,9 @@ def main():
                              "top1_acc": round(res["best_acc"], 4),
                              "trainable_params": res["trainable"],
                              "trainable_pct": round(100 * res["trainable"] / res["total"], 3)})
+                rows.sort(key=lambda row: (len(row["placement"]),
+                                           ["qkv".index(c) for c in row["placement"]],
+                                           row["r"]))
                 # write after every run so a crash doesn't lose the finished ones
                 os.makedirs("results", exist_ok=True)
                 with open(f"results/{stem}.json", "w") as f:
