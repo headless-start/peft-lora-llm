@@ -1,0 +1,8 @@
+epochs: 5
+lr: 3e-4
+weight_decay: 0.05
+warmup_epochs: 2
+min_lr: 1e-7
+amp: true
+limit_train_batches: null
+limit_val_batches: null

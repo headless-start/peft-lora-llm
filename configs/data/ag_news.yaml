@@ -1,0 +1,6 @@
+name: ag_news
+max_length: 128
+batch_size: 16
+num_workers: 2
+train_subset: 20000   # subsample of the 120K train split; null = full
+fake: false

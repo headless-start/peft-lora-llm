@@ -1,0 +1,8 @@
+backbone: HuggingFaceTB/SmolLM2-360M
+pretrained: true
+mode: lora               # lora | head (linear probe) | full (full fine-tuning)
+lora:
+  r: 8
+  alpha_factor: 2        # alpha = alpha_factor * r, per the LoRA paper default
+  placement: [q, v]      # any subset of q, k, v
+  dropout: 0.0

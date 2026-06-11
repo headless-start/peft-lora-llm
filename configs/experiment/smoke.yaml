@@ -1,0 +1,22 @@
+# @package _global_
+# Tiny end-to-end run on CPU with random token ids, a small random-init
+# backbone and no downloads. Usage: python train.py +experiment=smoke
+defaults:
+  - override /train: smoke
+
+device: cpu
+
+model:
+  backbone: tiny-random
+  pretrained: false
+
+data:
+  fake: true
+  batch_size: 8
+  num_workers: 0
+
+wandb:
+  mode: disabled
+
+train:
+  ckpt: outputs/smoke.pt   # keep smoke runs away from the real best checkpoint
