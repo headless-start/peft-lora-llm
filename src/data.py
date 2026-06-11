@@ -7,6 +7,9 @@ from transformers import AutoTokenizer
 
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 
+# AG News lives under the fancyzhx namespace on the hub
+HUB_ID = "fancyzhx/ag_news"
+
 # AG News topic names, in the dataset's label order
 CLASSES = ["World", "Sports", "Business", "Sci/Tech"]
 NUM_CLASSES = len(CLASSES)
@@ -53,7 +56,7 @@ def build_loaders(cfg):
         return (DataLoader(FakeTextData(64), batch_size=cfg.data.batch_size, shuffle=True),
                 DataLoader(FakeTextData(32), batch_size=cfg.data.batch_size), NUM_CLASSES)
 
-    ds = load_dataset("ag_news")
+    ds = load_dataset(HUB_ID)
     train_ds = ds["train"].shuffle(seed=cfg.seed)
     if cfg.data.train_subset:
         train_ds = train_ds.select(range(cfg.data.train_subset))
@@ -70,5 +73,5 @@ def build_loaders(cfg):
 
 def sample_rows(cfg, n=6):
     """A few (text, label) pairs from the train split for the samples figure."""
-    rows = load_dataset("ag_news")["train"].shuffle(seed=cfg.seed).select(range(n))
+    rows = load_dataset(HUB_ID)["train"].shuffle(seed=cfg.seed).select(range(n))
     return [(row["text"], CLASSES[row["label"]]) for row in rows]
