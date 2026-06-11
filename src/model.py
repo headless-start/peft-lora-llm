@@ -1,3 +1,4 @@
+import torch
 from transformers import (AutoModelForSequenceClassification, LlamaConfig,
                           LlamaForSequenceClassification)
 
@@ -7,8 +8,9 @@ from .lora import LoRALinear, inject_lora
 def build_model(cfg, num_classes):
     """Build the LLM classifier in the configured mode: lora, head (linear probe) or full."""
     if cfg.model.pretrained:
+        # fp32 master weights — amp handles the half-precision compute
         model = AutoModelForSequenceClassification.from_pretrained(
-            cfg.model.backbone, num_labels=num_classes)
+            cfg.model.backbone, num_labels=num_classes, dtype=torch.float32)
     else:
         # tiny random-init stand-in with the same q/k/v layout — used by the
         # smoke run, no downloads
