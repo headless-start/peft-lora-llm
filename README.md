@@ -57,7 +57,7 @@ For GPU training install the CUDA build of PyTorch from [pytorch.org](https://py
 python train.py
 
 # override anything from the command line
-python train.py train.epochs=3 data.batch_size=32 model.lora.r=16
+python train.py train.epochs=3 data.batch_size=16 model.lora.r=16
 ```
 
 Sweep the LoRA rank (writes `results/ablation.json` and `results/ablation.png`):
