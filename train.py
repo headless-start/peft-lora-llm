@@ -90,10 +90,12 @@ def main(cfg: DictConfig):
     """Single training run: train, then write the curve figure and metrics.json."""
     res = run_training(cfg, ckpt_path=cfg.train.get("ckpt", "outputs/best.pt"))
 
-    os.makedirs("results", exist_ok=True)
-    save_curve(res["history"], "results/training_curve.png")
+    # smoke runs write their artifacts to outputs/ so they never clobber real results
+    out_dir = "outputs" if cfg.data.fake else "results"
+    os.makedirs(out_dir, exist_ok=True)
+    save_curve(res["history"], f"{out_dir}/training_curve.png")
     if not cfg.data.fake:
-        save_samples(sample_rows(cfg), "results/ag_news_samples.png")
+        save_samples(sample_rows(cfg), f"{out_dir}/ag_news_samples.png")
     metrics = {
         "backbone": cfg.model.backbone,
         "dataset": cfg.data.name,
@@ -104,7 +106,7 @@ def main(cfg: DictConfig):
         "trainable_pct": round(100 * res["trainable"] / res["total"], 3),
         "lora": OmegaConf.to_container(cfg.model.lora, resolve=True),
     }
-    with open("results/metrics.json", "w") as f:
+    with open(f"{out_dir}/metrics.json", "w") as f:
         json.dump(metrics, f, indent=2)
 
 
