@@ -6,7 +6,7 @@ from .lora import LoRALinear, inject_lora
 
 
 def build_model(cfg, num_classes):
-    """Build the LLM classifier in the configured mode: lora, head (linear probe) or full."""
+    """Build the language model + classification head in the configured mode: lora, head (linear probe) or full."""
     if cfg.model.pretrained:
         # fp32 master weights — amp handles the half-precision compute
         model = AutoModelForSequenceClassification.from_pretrained(

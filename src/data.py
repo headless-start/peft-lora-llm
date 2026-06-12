@@ -33,7 +33,7 @@ class FakeTextData(Dataset):
 
 
 def build_tokenizer(backbone):
-    """Tokenizer for the backbone; decoder-only models need a pad token picked."""
+    """Tokenizer for the backbone; most decoder-only tokenizers ship without a pad token."""
     tok = AutoTokenizer.from_pretrained(backbone)
     if tok.pad_token is None:
         tok.pad_token = tok.eos_token

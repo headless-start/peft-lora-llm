@@ -1,7 +1,7 @@
 # Parameter-Efficient Fine-Tuning of a Small Language Model (LoRA)
 
 ## 📌 Project Overview
-This project demonstrates **parameter-efficient fine-tuning** of a small **decoder-only language model** for text classification using **LoRA** — strictly low-rank updates, no other PEFT method. A pretrained backbone is adapted to a new dataset by learning small low-rank deltas on the attention **query/value** projections, while the backbone itself stays frozen. This reaches near full fine-tuning accuracy while updating only a tiny fraction of the weights.
+This project demonstrates **parameter-efficient fine-tuning** of a small **decoder-only language model** for text classification using **LoRA** — strictly low-rank updates, no other PEFT method. A pretrained backbone is adapted to a new dataset by learning small low-rank deltas on the attention **query/value** projections, while the backbone itself stays frozen. This reaches near full fine-tuning accuracy while updating only a tiny fraction of the weights. The backbone is deliberately small — the same decoder-only architecture as full-size LLMs, sized to train comfortably on a single 8 GB GPU; the method itself is what the LoRA paper shows to be size-agnostic.
 
 **Dataset**: AG News (4 news topics: World, Sports, Business, Sci/Tech).  
 **Backbone**: `HuggingFaceTB/SmolLM2-360M` with a classification head, via `transformers`.  

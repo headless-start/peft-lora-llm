@@ -33,7 +33,7 @@ def predict(model, tokenizer, text, device, topk=2, max_length=128):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Classify news snippets with the fine-tuned LLM")
+    parser = argparse.ArgumentParser(description="Classify news snippets with the fine-tuned SmolLM2")
     parser.add_argument("texts", nargs="+", help="text snippet(s) to classify")
     parser.add_argument("--ckpt", default="outputs/best.pt")
     parser.add_argument("--backbone", default="HuggingFaceTB/SmolLM2-360M")
