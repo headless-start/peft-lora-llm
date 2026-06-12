@@ -1,0 +1,30 @@
+[
+  {
+    "r": 4,
+    "placement": "qv",
+    "top1_acc": 0.9312,
+    "trainable_params": 413440,
+    "trainable_pct": 0.114
+  },
+  {
+    "r": 8,
+    "placement": "qv",
+    "top1_acc": 0.9367,
+    "trainable_params": 823040,
+    "trainable_pct": 0.227
+  },
+  {
+    "r": 16,
+    "placement": "qv",
+    "top1_acc": 0.9314,
+    "trainable_params": 1642240,
+    "trainable_pct": 0.452
+  },
+  {
+    "r": 32,
+    "placement": "qv",
+    "top1_acc": 0.9316,
+    "trainable_params": 3280640,
+    "trainable_pct": 0.899
+  }
+]

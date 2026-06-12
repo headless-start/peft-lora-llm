@@ -1,0 +1,18 @@
+{
+  "backbone": "HuggingFaceTB/SmolLM2-360M",
+  "dataset": "ag_news",
+  "epochs": 5,
+  "top1_acc": 0.9367,
+  "trainable_params": 823040,
+  "total_params": 362644160,
+  "trainable_pct": 0.227,
+  "lora": {
+    "r": 8,
+    "alpha_factor": 2,
+    "placement": [
+      "q",
+      "v"
+    ],
+    "dropout": 0.0
+  }
+}
